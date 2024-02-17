@@ -6,15 +6,15 @@ class Solution {
         int gasSum = Arrays.stream(gas).sum();
         int costSum = Arrays.stream(cost).sum();
 
-        if(gasSum < costSum){
+        if (gasSum < costSum) {
             return -1;
         }
 
-        for(int i=0; i<gas.length; i++){
+        for (int i = 0; i < gas.length; i++) {
             currentFuel += gas[i] - cost[i];
 
-            if(currentFuel < 0 ){
-                start = i+1;
+            if (currentFuel < 0) {
+                start = i + 1;
                 currentFuel = 0;
             }
         }            
