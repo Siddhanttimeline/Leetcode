@@ -10,32 +10,27 @@
  */
 class Solution {
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        Map<Integer,Integer> freq = new TreeMap<>();
+        ListNode holder = new ListNode(-1);
+        ListNode current = holder;
 
-        while(list1 != null){
-            freq.put(list1.val, freq.getOrDefault(list1.val, 0)+1);
-            list1 = list1.next;
-        }
-
-        while(list2 != null){
-            freq.put(list2.val, freq.getOrDefault(list2.val, 0)+1);
-            list2 = list2.next;
-        }
-
-        ListNode head = new ListNode(-1);
-        ListNode pointer = head;
-
-        for (Map.Entry<Integer, Integer> entry : freq.entrySet()) {
-            int key = entry.getKey();
-            int value = entry.getValue();
-
-            while(value-- > 0){
-                ListNode node = new ListNode(key);
-                pointer.next = node;
-                pointer = node;
+        while(list1 != null && list2 != null){
+            if(list1.val < list2.val){
+                current.next = list1;
+                list1 = list1.next;
+            }else{
+                current.next = list2;
+                list2 = list2.next;
             }
+
+            current = current.next;
         }
 
-        return head.next;
+        if(list1 != null){
+            current.next = list1;
+        }else{
+            current.next = list2;
+        }
+
+        return holder.next;
     }
 }
