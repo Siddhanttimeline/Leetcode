@@ -5,13 +5,13 @@ class Solution {
         if (s.length() > 12)
             return result;
 
-        backtrack(result, 0, 0, s, new StringBuilder());
+        backtrack(0, 0, new StringBuilder(), s, result);
         return result;
     }
 
-    private void backtrack(List<String> result, int dots, int index, String s, StringBuilder current) {
+    private void backtrack(int index, int dots, StringBuilder current, String s, List<String> result ) {
         if (dots == 4 && index == s.length()) {
-            result.add(current.substring(0, current.length() - 1)); // Remove last "."
+            result.add(current.substring(0, current.length() - 1));
             return;
         }
 
@@ -22,17 +22,17 @@ class Solution {
             String segment = s.substring(index, j + 1);
 
             if (segment.length() > 1 && segment.startsWith("0"))
-                continue; // Skip leading zeros
-                
+                continue; // leading zeroes
+
             if (Integer.parseInt(segment) > 255)
-                continue; // Ensure valid range
+                continue;   // invalid interger value
 
             int lenBeforeAppend = current.length();
+
             current.append(segment).append(".");
 
-            backtrack(result, dots + 1, j + 1, s, current);
+            backtrack(j + 1, dots + 1, current, s, result);
 
-            // Backtrack: Remove added segment and dot
             current.setLength(lenBeforeAppend);
         }
     }
